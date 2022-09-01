@@ -6,6 +6,9 @@ import Control.Plus (empty)
 import Data.List (List(..), filter, head)
 import Data.Maybe (Maybe)
 
+add :: Int -> Int -> Int
+add x y = x + y
+
 type Address =
   { street :: String
   , city   :: String
@@ -14,11 +17,13 @@ type Address =
 
 type Entry =
   { firstName :: String
-  , lastName  :: String
-  , address   :: Address
+  , lastName :: String
+  , address :: Address=
   }
 
+
 type AddressBook = List Entry
+
 
 showAddress :: Address -> String
 showAddress addr = addr.street <> ", " <>
@@ -26,21 +31,18 @@ showAddress addr = addr.street <> ", " <>
                    addr.state
 
 showEntry :: Entry -> String
+
 showEntry entry = entry.lastName <> ", " <>
                   entry.firstName <> ": " <>
-                  showAddress entry.address
+                    showAddress entry.address
+
 
 emptyBook :: AddressBook
 emptyBook = empty
 
--- This line should have been automatically deleted by resetSolutions.sh. See Chapter 2 for instructions. NOTE TO MAINTAINER: If editing `insertEntry`, remember to also update the non-anchored (and unsimplified) version of this function that is hardcoded in the book text.
 insertEntry :: Entry -> AddressBook -> AddressBook
-insertEntry = Cons
 
--- This line should have been automatically deleted by resetSolutions.sh. See Chapter 2 for instructions. NOTE TO MAINTAINER: If editing `findEntry`, remember to also update the non-anchored (and unsimplified) version of this function that is hardcoded in the book text.
-findEntry :: String -> String -> AddressBook -> Maybe Entry
-findEntry firstName lastName = head <<< filter filterEntry
-  where
-  filterEntry :: Entry -> Boolean
-  filterEntry entry = entry.firstName == firstName && entry.lastName == lastName
+--insertEntry entry book = Cons entry book
+insertEntry Cons
+--This process is called eta conversion
 
